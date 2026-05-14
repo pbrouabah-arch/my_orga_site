@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Introduction to Organizations · 1CP 2025–2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0e0e10;
+    --paper: #f5f0e8;
+    --cream: #ede7d5;
+    --accent: #c0392b;
+    --gold: #b8860b;
+    --muted: #6b6460;
+    --border: #d0c9ba;
+    --highlight: #fff3cd;
+    --green: #1a6b3c;
+    --blue: #1a3a6b;
+    --shadow: rgba(14,14,16,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'DM Sans',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    font-size:16px;
+    line-height:1.65;
+  }
+ 
+  /* ─── NAV ─────────────────────────────── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(245,240,232,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+    padding:0 2rem;
+    display:flex;align-items:center;gap:0;
+    height:56px;
+  }
+  .nav-brand{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:1.1rem;
+    color:var(--ink);margin-right:auto;
+    text-decoration:none;
+  }
+  .nav-brand span{color:var(--accent);}
+  nav a{
+    text-decoration:none;color:var(--muted);
+    font-size:.82rem;font-weight:500;letter-spacing:.03em;
+    text-transform:uppercase;padding:.4rem .9rem;
+    border-radius:4px;transition:all .2s;
+  }
+  nav a:hover{color:var(--ink);background:var(--cream);}
+ 
+  /* ─── HERO ─────────────────────────────── */
+  #hero{
+    padding:120px 0 80px;
+    background:var(--ink);
+    color:var(--paper);
+    position:relative;overflow:hidden;
+  }
+  #hero::before{
+    content:'';position:absolute;inset:0;
+    background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-inner{
+    max-width:900px;margin:0 auto;padding:0 2rem;
+    display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;
+  }
+  .hero-badge{
+    display:inline-block;
+    background:var(--accent);color:#fff;
+    font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+    font-family:'IBM Plex Mono',monospace;
+    padding:.25rem .7rem;border-radius:2px;margin-bottom:1.2rem;
+  }
+  #hero h1{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2.4rem,5vw,3.6rem);
+    font-weight:900;line-height:1.1;
+    margin-bottom:1.2rem;
+  }
+  #hero h1 em{color:var(--gold);font-style:italic;}
+  #hero p{
+    font-size:1.05rem;color:rgba(245,240,232,.75);
+    max-width:520px;line-height:1.7;
+  }
+  .hero-meta{
+    text-align:right;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.78rem;color:rgba(245,240,232,.5);
+    line-height:2;
+  }
+  .hero-meta strong{
+    display:block;font-size:1rem;
+    color:var(--paper);font-family:'DM Sans',sans-serif;
+    font-weight:600;margin-bottom:.5rem;
+  }
+ 
+  /* ─── TOC STRIP ─────────────────────────── */
+  .toc-strip{
+    background:var(--accent);
+    display:flex;overflow-x:auto;
+    gap:0;
+  }
+  .toc-strip::-webkit-scrollbar{display:none;}
+  .toc-btn{
+    background:none;border:none;cursor:pointer;
+    color:rgba(255,255,255,.75);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.73rem;letter-spacing:.06em;text-transform:uppercase;
+    padding:.9rem 1.5rem;white-space:nowrap;
+    border-right:1px solid rgba(255,255,255,.15);
+    transition:all .2s;
+  }
+  .toc-btn:hover,.toc-btn.active{
+    background:rgba(0,0,0,.2);color:#fff;
+  }
+ 
+  /* ─── MAIN LAYOUT ─────────────────────── */
+  main{max-width:960px;margin:0 auto;padding:3rem 2rem 6rem;}
+ 
+  /* ─── CHAPTERS ───────────────────────── */
+  .chapter{
+    margin-bottom:4rem;
+    animation:fadeUp .5s ease both;
+  }
+  .chapter.hidden{display:none;}
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .chapter-header{
+    display:flex;align-items:center;gap:1rem;
+    margin-bottom:2rem;padding-bottom:1rem;
+    border-bottom:2px solid var(--ink);
+  }
+  .ch-num{
+    font-family:'Playfair Display',serif;
+    font-size:3rem;font-weight:900;
+    color:var(--cream);
+    -webkit-text-stroke:2px var(--ink);
+    line-height:1;flex-shrink:0;
+  }
+  .ch-title h2{
+    font-family:'Playfair Display',serif;
+    font-size:1.6rem;font-weight:700;line-height:1.2;
+  }
+  .ch-title p{color:var(--muted);font-size:.88rem;margin-top:.2rem;}
+ 
+  /* ─── SECTION CARDS ──────────────────── */
+  .section-grid{display:grid;gap:1.2rem;}
+  .card{
+    background:#fff;border:1px solid var(--border);
+    border-radius:8px;overflow:hidden;
+    box-shadow:0 2px 8px var(--shadow);
+  }
+  .card-header{
+    padding:1rem 1.4rem;
+    display:flex;align-items:center;gap:.8rem;cursor:pointer;
+    background:var(--cream);
+    border-bottom:1px solid var(--border);
+    user-select:none;
+    transition:background .2s;
+  }
+  .card-header:hover{background:#e5deca;}
+  .card-icon{
+    width:32px;height:32px;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1rem;flex-shrink:0;
+  }
+  .icon-blue{background:#dbeafe;}
+  .icon-green{background:#d1fae5;}
+  .icon-amber{background:#fef3c7;}
+  .icon-red{background:#fee2e2;}
+  .icon-purple{background:#ede9fe;}
+  .card-header h3{
+    font-size:1rem;font-weight:600;flex:1;
+  }
+  .card-toggle{
+    font-size:1.2rem;color:var(--muted);
+    transition:transform .3s;
+  }
+  .card.open .card-toggle{transform:rotate(180deg);}
+  .card-body{display:none;padding:1.4rem;font-size:.93rem;}
+  .card.open .card-body{display:block;}
+ 
+  /* ─── CONTENT COMPONENTS ────────────── */
+  .def-box{
+    background:var(--highlight);
+    border-left:4px solid var(--gold);
+    border-radius:0 6px 6px 0;
+    padding:1rem 1.2rem;margin:.8rem 0;
+    font-size:.92rem;
+  }
+  .def-box strong{color:var(--gold);display:block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem;}
+ 
+  .key-points{list-style:none;margin:.8rem 0;}
+  .key-points li{
+    padding:.5rem .8rem .5rem 2rem;
+    position:relative;border-bottom:1px solid var(--cream);
+    font-size:.92rem;
+  }
+  .key-points li:last-child{border-bottom:none;}
+  .key-points li::before{
+    content:'→';position:absolute;left:.5rem;
+    color:var(--accent);font-weight:700;
+  }
+ 
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.8rem 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .mini-card{
+    background:var(--cream);border-radius:6px;
+    padding:.9rem 1rem;font-size:.88rem;
+  }
+  .mini-card h4{font-weight:600;margin-bottom:.4rem;font-size:.9rem;}
+ 
+  .tag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0;}
+  .tag{
+    background:var(--ink);color:var(--paper);
+    font-size:.72rem;font-weight:500;letter-spacing:.05em;
+    padding:.25rem .6rem;border-radius:3px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .tag.blue{background:var(--blue);}
+  .tag.green{background:var(--green);}
+  .tag.red{background:var(--accent);}
+  .tag.gold{background:var(--gold);}
+ 
+  table.summary-table{
+    width:100%;border-collapse:collapse;
+    font-size:.85rem;margin:.8rem 0;
+  }
+  table.summary-table th{
+    background:var(--ink);color:var(--paper);
+    padding:.6rem .8rem;text-align:left;
+    font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;
+  }
+  table.summary-table td{
+    padding:.55rem .8rem;border-bottom:1px solid var(--border);
+  }
+  table.summary-table tr:nth-child(even) td{background:var(--cream);}
+ 
+  /* ─── EXERCISES ──────────────────────── */
+  .ex-header{
+    display:flex;align-items:center;gap:.8rem;
+    margin-bottom:1.5rem;padding-bottom:.8rem;
+    border-bottom:2px dashed var(--border);
+  }
+  .ex-badge{
+    background:var(--accent);color:#fff;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:.25rem .6rem;border-radius:3px;
+  }
+  .ex-card{
+    background:#fff;border:1px solid var(--border);
+    border-radius:8px;margin-bottom:1.5rem;
+    overflow:hidden;box-shadow:0 2px 8px var(--shadow);
+  }
+  .ex-card-head{
+    padding:1rem 1.4rem;
+    background:linear-gradient(135deg,#fff9f0,var(--cream));
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:1rem;
+    cursor:pointer;
+  }
+  .ex-num{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--ink);color:var(--paper);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:1rem;flex-shrink:0;
+  }
+  .ex-card-head h4{flex:1;font-size:.97rem;font-weight:600;}
+  .ex-body{display:none;padding:1.4rem;}
+  .ex-card.open .ex-body{display:block;}
+  .ex-q{
+    background:var(--cream);border-radius:6px;
+    padding:.9rem 1.1rem;margin-bottom:.8rem;
+    font-size:.91rem;
+  }
+  .ex-q p{margin:.3rem 0;}
+ 
+  /* ─── SOLUTION ────────────────────────── */
+  .solution-toggle{
+    background:none;border:1px solid var(--green);
+    color:var(--green);border-radius:4px;
+    padding:.4rem 1rem;font-size:.8rem;font-weight:600;
+    cursor:pointer;margin-top:.8rem;transition:all .2s;
+    font-family:'DM Sans',sans-serif;
+  }
+  .solution-toggle:hover{background:var(--green);color:#fff;}
+  .solution-box{
+    display:none;margin-top:.8rem;
+    background:#f0fff4;border:1px solid #a7f3d0;
+    border-radius:6px;padding:1rem 1.2rem;
+    font-size:.9rem;
+  }
+  .solution-box.visible{display:block;}
+  .solution-box strong{color:var(--green);display:block;margin-bottom:.4rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;}
+ 
+  /* ─── MCQ ──────────────────────────────── */
+  .mcq-option{
+    display:block;padding:.55rem .9rem;
+    border:1px solid var(--border);border-radius:5px;
+    margin-bottom:.4rem;cursor:pointer;
+    transition:all .2s;font-size:.88rem;
+    background:#fff;
+  }
+  .mcq-option:hover{border-color:var(--ink);background:var(--cream);}
+  .mcq-option.correct{background:#d1fae5;border-color:var(--green);color:var(--green);}
+  .mcq-option.wrong{background:#fee2e2;border-color:var(--accent);color:var(--accent);}
+ 
+  /* ─── FOOTER ──────────────────────────── */
+  footer{
+    background:var(--ink);color:var(--paper);
+    text-align:center;padding:2rem;
+    font-size:.8rem;color:rgba(245,240,232,.5);
+    font-family:'IBM Plex Mono',monospace;
+  }
+  footer span{color:var(--gold);}
+ 
+  /* ─── PROGRESS BAR ──────────────────── */
+  #progress{
+    position:fixed;top:56px;left:0;height:3px;
+    background:var(--accent);z-index:99;
+    transition:width .1s;width:0%;
+  }
+</style>
+</head>
+<body>
+ 
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#hero"><span>&#x2022;</span> Intro to Organizations</a>
+  <a href="#" onclick="showSection('courses')">Courses</a>
+  <a href="#" onclick="showSection('exercises')">Exercises</a>
+</nav>
+<div id="progress"></div>
+ 
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">Module · 2025–2026</div>
+      <h1>Introduction<br/>to <em>Organizations</em></h1>
+      <p>A complete study companion covering economics, organizational theory, systemic thinking, and functional management — with exercises and model answers.</p>
+    </div>
+    <div class="hero-meta">
+      <strong>1CP — Engineering Year 1</strong>
+      Chapter 0 · Introduction<br/>
+      Chapter 1 · Economics<br/>
+      Chapter 2 · Organizations<br/>
+      Chapter 3 · Systemic View<br/>
+      Chapter 4 · Functions<br/>
+      <br/>
+      Ms. BenMiloud<br/>Ms. Bourai
+    </div>
+  </div>
+</section>
+ 
+<!-- TOC STRIP -->
+<div class="toc-strip">
+  <button class="toc-btn active" onclick="showSection('courses');setActive(this)">📚 All Chapters</button>
+  <button class="toc-btn" onclick="showChapter('ch0');setActive(this)">Ch.0 · Intro</button>
+  <button class="toc-btn" onclick="showChapter('ch1');setActive(this)">Ch.1 · Economics</button>
+  <button class="toc-btn" onclick="showChapter('ch2');setActive(this)">Ch.2 · Organizations</button>
+  <button class="toc-btn" onclick="showChapter('ch3');setActive(this)">Ch.3 · Systemic View</button>
+  <button class="toc-btn" onclick="showChapter('ch4');setActive(this)">Ch.4 · Functions</button>
+  <button class="toc-btn" onclick="showSection('exercises');setActive(this)">✏️ Exercises</button>
+</div>
+ 
+<main>
+ 
+<!-- ══════════════════════════════════════════ -->
+<!-- COURSES SECTION                            -->
+<!-- ══════════════════════════════════════════ -->
+<div id="courses-section">
+ 
+<!-- CHAPTER 0 -->
+<div class="chapter" id="ch0">
+  <div class="chapter-header">
+    <div class="ch-num">0</div>
+    <div class="ch-title">
+      <h2>Introduction to the Module</h2>
+      <p>Syllabus, objectives &amp; module overview</p>
+    </div>
+  </div>
+  <div class="section-grid">
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-blue">🎯</div>
+        <h3>Module Learning Objectives</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <p>At the end of this module, you will be able to:</p>
+        <ul class="key-points">
+          <li>Understand the main economic concepts and trends</li>
+          <li>Describe the characteristics and typologies of organizations</li>
+          <li>Understand key theoretical perspectives (Systems Theory, Contingency Theory, etc.)</li>
+          <li>Analyze the internal and external environment of organizations</li>
+          <li>Understand and analyze the major organizational functions</li>
+        </ul>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-amber">📋</div>
+        <h3>Module Content Overview</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <table class="summary-table">
+          <tr><th>Chapter</th><th>Topic</th><th>Instructor</th></tr>
+          <tr><td>Ch. 01</td><td>Introduction to Economy</td><td>Ms. BenMiloud</td></tr>
+          <tr><td>Ch. 02</td><td>Organization: Overview</td><td>Ms. Bourai</td></tr>
+          <tr><td>Ch. 03</td><td>Organizational Systemic Perspective</td><td>Ms. BenMiloud</td></tr>
+          <tr><td>Ch. 04</td><td>Organizational Functions</td><td>Ms. Bourai</td></tr>
+          <tr><td>Ch. 05</td><td>Visiting an Organization</td><td>Ms. Meziani &amp; Ms. Yefsah</td></tr>
+        </table>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+ 
+<!-- CHAPTER 1 -->
+<div class="chapter" id="ch1">
+  <div class="chapter-header">
+    <div class="ch-num">1</div>
+    <div class="ch-title">
+      <h2>Introduction to Economics</h2>
+      <p>Fundamental concepts, typologies &amp; economic history</p>
+    </div>
+  </div>
+  <div class="section-grid">
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-blue">💡</div>
+        <h3>What is Economics?</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="def-box">
+          <strong>Definition</strong>
+          Economics is the science that studies how individuals and organizations use <em>limited resources</em> to satisfy <em>multiple needs</em>. It analyzes choices made when resources (time, money, technology) are scarce.
+        </div>
+        <p><strong>Etymology:</strong> From Ancient Greek <em>Oïkos</em> (house/estate) + <em>Nomos</em> (rule/management) → "the management of the household".</p>
+        <div class="def-box" style="margin-top:1rem;">
+          <strong>Why Economics for Engineers?</strong>
+          The engineer is not just a technician — they are a resource manager. They must ensure market fit (viability), make buy vs. build decisions (CAPEX/OPEX), and understand the market context before launching a project.
+        </div>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-green">🔑</div>
+        <h3>Key Economic Concepts</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="two-col">
+          <div class="mini-card">
+            <h4>Scarcity</h4>
+            Resources are limited while needs are unlimited. This forces choices and trade-offs.
+          </div>
+          <div class="mini-card">
+            <h4>Economic Agent</h4>
+            Any individual or entity that makes economic decisions: households, firms, government, rest of the world.
+          </div>
+          <div class="mini-card">
+            <h4>Microeconomics</h4>
+            Studies individual agents — a firm's pricing decision, a student choosing between laptops.
+          </div>
+          <div class="mini-card">
+            <h4>Macroeconomics</h4>
+            Studies economy-wide phenomena — inflation, unemployment, GDP, exchange rates.
+          </div>
+          <div class="mini-card">
+            <h4>CAPEX</h4>
+            Capital expenditure — one-time investments (buying a server). Creates fixed assets.
+          </div>
+          <div class="mini-card">
+            <h4>OPEX</h4>
+            Operational expenditure — recurring costs (cloud subscription). Flexibility without ownership.
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-amber">⚙️</div>
+        <h3>The Three Fundamental Economic Activities</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <table class="summary-table">
+          <tr><th>Activity</th><th>Description</th><th>IT Example</th></tr>
+          <tr><td><strong>Production</strong></td><td>Creation of goods/services using factors of production</td><td>Developing a software app</td></tr>
+          <tr><td><strong>Consumption</strong></td><td>Use of goods/services to satisfy needs</td><td>Buying a SaaS subscription</td></tr>
+          <tr><td><strong>Capital Formation</strong></td><td>Investment to grow productive capacity</td><td>Buying servers, hiring engineers</td></tr>
+        </table>
+        <div class="def-box" style="margin-top:1rem;">
+          <strong>Value Added (VA)</strong>
+          VA = Revenue − Intermediate Consumption (IC). IC includes cloud hosting, electricity, raw materials — costs consumed in production. Profit = VA − Wages − Taxes − Depreciation.
+        </div>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-purple">🌱</div>
+        <h3>Economic Trends</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <ul class="key-points">
+          <li><strong>Circular Economy:</strong> Minimize waste by keeping resources in use (repair, reuse, recycle IT equipment)</li>
+          <li><strong>Digital Economy:</strong> Value creation through data, platforms, and software (scalability is key)</li>
+          <li><strong>Inclusive Economy:</strong> Economic activity that benefits all groups, reducing inequality</li>
+          <li><strong>Globalization:</strong> Integration of markets — local companies compete globally; multinationals adapt locally</li>
+        </ul>
+        <div class="def-box">
+          <strong>Scalability</strong>
+          The ability of a system or business to grow without proportional increase in cost. Central to the digital economy — software can serve 10 or 10 million users at near-zero marginal cost.
+        </div>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-red">🔄</div>
+        <h3>Economic Circuit &amp; Flows</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="two-col">
+          <div class="mini-card">
+            <h4>Real Flows</h4>
+            Movement of goods, services, and labor between agents. Example: a worker provides labor to a firm.
+          </div>
+          <div class="mini-card">
+            <h4>Monetary Flows</h4>
+            Counter-flow of money. The firm pays wages in exchange for the worker's labor.
+          </div>
+        </div>
+        <p style="margin-top:.8rem;font-size:.9rem;">In the <strong>simple circuit</strong>: Households supply labor → firms pay wages → households spend on goods → firms receive revenue. The circular economy tries to recover value at end-of-life (e-waste recycling) rather than destroy it.</p>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+ 
+<!-- CHAPTER 2 -->
+<div class="chapter" id="ch2">
+  <div class="chapter-header">
+    <div class="ch-num">2</div>
+    <div class="ch-title">
+      <h2>Organization Overview</h2>
+      <p>Concepts, types, stakeholders &amp; historical theories</p>
+    </div>
+  </div>
+  <div class="section-grid">
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-blue">📖</div>
+        <h3>Defining an Organization</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="def-box">
+          <strong>Robbins &amp; Mathew (1990)</strong>
+          "An organization is a consciously coordinated social entity, with a relatively identifiable boundary, that functions on a relatively continuous basis to achieve a common goal or set of goals."
+        </div>
+        <div class="def-box">
+          <strong>Richard L. Daft (2012)</strong>
+          Organizations are (1) social entities, (2) goal-directed, (3) deliberately structured activity systems, (4) linked to the external environment.
+        </div>
+        <div class="def-box">
+          <strong>H. Mintzberg (1982)</strong>
+          "An organization can be defined as the sum total of the ways in which labour is divided into distinct tasks and then its coordination is achieved among these tasks."
+        </div>
+        <div class="def-box">
+          <strong>Simple Summary</strong>
+          An organization is a group of people where work is divided into different tasks, and these tasks are coordinated to achieve common goals.
+        </div>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-green">🎯</div>
+        <h3>Main Missions of an Organization</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="tag-row">
+          <span class="tag blue">Economic</span>
+          <span class="tag green">Social</span>
+          <span class="tag red">Public Service</span>
+          <span class="tag gold">Financial</span>
+          <span class="tag">Innovation</span>
+          <span class="tag green">Environmental</span>
+        </div>
+        <p style="margin-top:.8rem;font-size:.9rem;">Organizations combine resources (human, financial, material) to achieve specific objectives. Their missions may be single or multiple — a company can simultaneously be economic and social.</p>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-amber">🏢</div>
+        <h3>Organization vs. Company</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <table class="summary-table">
+          <tr><th></th><th>Organization</th><th>Company</th></tr>
+          <tr><td>Definition</td><td>Any coordinated group with common goals</td><td>An economic organization producing goods/services for sale</td></tr>
+          <tr><td>Profit</td><td>Not necessarily profit-driven</td><td>Aims for profit and sustainability</td></tr>
+          <tr><td>Examples</td><td>NGO, school, hospital, state</td><td>Factory, startup, bank, retailer</td></tr>
+          <tr><td>Relation</td><td colspan="2">Every company is an organization, but NOT every organization is a company</td></tr>
+        </table>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-purple">🗂️</div>
+        <h3>Types of Organizations</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <table class="summary-table">
+          <tr><th>Criterion</th><th>Types</th></tr>
+          <tr><td><strong>By Sector</strong></td><td>Primary (agriculture/mining) · Secondary (manufacturing) · Tertiary (services)</td></tr>
+          <tr><td><strong>By Size</strong></td><td>VSE (&lt;10 employees) · SME (10–499) · Large (&gt;500)</td></tr>
+          <tr><td><strong>By Ownership</strong></td><td>Private · Public (state-controlled) · Mixed</td></tr>
+          <tr><td><strong>By Legal Status</strong></td><td>SARL (LLC) · SPA (Public Ltd.) · SNC · Individual</td></tr>
+          <tr><td><strong>By Mission</strong></td><td>For-profit · Non-profit · Public service</td></tr>
+        </table>
+        <div class="def-box" style="margin-top:.8rem;">
+          <strong>Key Distinction</strong>
+          A <strong>SARL</strong> (Société à Responsabilité Limitée) limits partner liability to their contributions and typically has fewer shareholders. An <strong>SPA</strong> (Société Par Actions) can have unlimited shareholders and trade shares publicly.
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+ 
+<!-- CHAPTER 3 -->
+<div class="chapter" id="ch3">
+  <div class="chapter-header">
+    <div class="ch-num">3</div>
+    <div class="ch-title">
+      <h2>Organizational Systemic Perspective</h2>
+      <p>Internal &amp; external environments, systems theory</p>
+    </div>
+  </div>
+  <div class="section-grid">
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-blue">⚡</div>
+        <h3>What is a System?</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="def-box">
+          <strong>Definition</strong>
+          A system is an organized set of interdependent elements that interact with each other to achieve a common objective.
+        </div>
+        <table class="summary-table">
+          <tr><th>Element</th><th>For a Firm</th></tr>
+          <tr><td>Inputs</td><td>Capital, labor, information, raw materials</td></tr>
+          <tr><td>Process</td><td>Production, management, coordination</td></tr>
+          <tr><td>Outputs</td><td>Goods, services, economic value</td></tr>
+          <tr><td>Environment</td><td>Market, regulations, competitors</td></tr>
+        </table>
+        <p style="margin-top:.8rem;font-size:.9rem;"><strong>Key Idea:</strong> A company is an <em>open system</em> — it continuously interacts with its external environment. Its performance results from a combination of strategic, human, and organizational factors, not technology alone.</p>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-green">🏠</div>
+        <h3>Internal Environment</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <ul class="key-points">
+          <li><strong>Organizational Structure:</strong> How tasks and departments are arranged (functional, divisional, matrix, hierarchical)</li>
+          <li><strong>Leadership Style:</strong> Democratic (consults team) · Authoritarian (decides alone) · Transformational (inspires change) · Laissez-faire</li>
+          <li><strong>Organizational Culture:</strong> Shared values, beliefs, and behaviors that define how people work together</li>
+          <li><strong>Motivation:</strong> Salary, bonuses, recognition, advancement opportunities, training</li>
+          <li><strong>Communication:</strong> Internal flow of information — good communication improves coordination and reduces conflict</li>
+        </ul>
+        <table class="summary-table" style="margin-top:.8rem;">
+          <tr><th>Structure Type</th><th>Description</th><th>Best For</th></tr>
+          <tr><td>Functional</td><td>Organized by department (HR, Finance, Marketing)</td><td>Stable, single-product companies</td></tr>
+          <tr><td>Divisional</td><td>Organized by product, region, or customer</td><td>Multinationals, diverse product lines</td></tr>
+          <tr><td>Matrix</td><td>Dual authority — employees have 2 managers</td><td>Consulting firms, project-based work</td></tr>
+          <tr><td>Hierarchical</td><td>Clear vertical chain of command</td><td>Military, traditional bureaucracies</td></tr>
+        </table>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-amber">🌍</div>
+        <h3>External Environment — PESTEL</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <p style="margin-bottom:.8rem;font-size:.9rem;">The <strong>PESTEL framework</strong> analyzes macro-environmental forces affecting the organization:</p>
+        <table class="summary-table">
+          <tr><th>Factor</th><th>Examples</th></tr>
+          <tr><td>🏛️ <strong>Political</strong></td><td>Government stability, trade policy, tax law</td></tr>
+          <tr><td>💰 <strong>Economic</strong></td><td>Inflation, unemployment, exchange rates, GDP growth</td></tr>
+          <tr><td>👥 <strong>Social</strong></td><td>Demographic trends, cultural attitudes, consumer behavior</td></tr>
+          <tr><td>💻 <strong>Technological</strong></td><td>AI, automation, digital infrastructure, R&amp;D investment</td></tr>
+          <tr><td>⚖️ <strong>Environmental</strong></td><td>CO₂ regulations, sustainability requirements, climate risk</td></tr>
+          <tr><td>📜 <strong>Legal</strong></td><td>Data protection laws, labor law, competition law</td></tr>
+        </table>
+        <div class="def-box" style="margin-top:.8rem;">
+          <strong>Opportunities vs. Threats</strong>
+          External factors can be either opportunities (new markets, tech breakthroughs, rising purchasing power) or threats (new competitors, inflation, new regulations). Strategic decision-making requires continuous environmental monitoring.
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+ 
+<!-- CHAPTER 4 -->
+<div class="chapter" id="ch4">
+  <div class="chapter-header">
+    <div class="ch-num">4</div>
+    <div class="ch-title">
+      <h2>Functions of an Organization</h2>
+      <p>Operational &amp; support functions, their roles and interactions</p>
+    </div>
+  </div>
+  <div class="section-grid">
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-blue">🗺️</div>
+        <h3>Overview of Organizational Functions</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="def-box">
+          <strong>Function</strong>
+          In a company, functions correspond to groups of tasks that contribute to the same result. They work together in a complementary way to achieve the organization's goals.
+        </div>
+        <table class="summary-table">
+          <tr><th>Function</th><th>Role</th></tr>
+          <tr><td>📣 Sales / Marketing</td><td>Generate revenue; manage product, price, place, promotion (4Ps)</td></tr>
+          <tr><td>🏭 Production</td><td>Transform raw materials into finished goods</td></tr>
+          <tr><td>🛒 Purchasing</td><td>Negotiate and source raw materials and supplies</td></tr>
+          <tr><td>🚚 Logistics</td><td>Transport, store, and distribute goods</td></tr>
+          <tr><td>📦 Inventory Mgmt</td><td>Maintain optimal stock levels</td></tr>
+          <tr><td>💼 Finance / Accounting</td><td>Manage budgets, invoices, salaries, profitability</td></tr>
+          <tr><td>👤 Human Resources</td><td>Recruit, train, motivate, and manage employees</td></tr>
+          <tr><td>🔬 R&amp;D</td><td>Develop new products, technologies, and innovations</td></tr>
+          <tr><td>📊 Management</td><td>Plan, organize, lead, control all activities</td></tr>
+        </table>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-green">📣</div>
+        <h3>Sales Function — The 6 Steps</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <p style="margin-bottom:.8rem;font-size:.9rem;">The sales process follows a structured 6-step approach:</p>
+        <ul class="key-points">
+          <li><strong>Step 1 — Prospecting:</strong> Identify and contact potential customers</li>
+          <li><strong>Step 2 — Qualification:</strong> Evaluate whether the prospect can become a satisfied customer</li>
+          <li><strong>Step 3 — Sales Presentation:</strong> Demonstrate your product/service as the best solution</li>
+          <li><strong>Step 4 — Handling Objections:</strong> Prepare effective responses to prospect resistance</li>
+          <li><strong>Step 5 — Closing:</strong> Secure the sale and convert prospect to customer</li>
+          <li><strong>Step 6 — Follow-up / Loyalty:</strong> Maintain satisfaction and generate repeat sales</li>
+        </ul>
+        <div class="def-box" style="margin-top:.8rem;">
+          <strong>The 4Ps of Marketing</strong>
+          <strong>Product</strong> (what to produce?) · <strong>Price</strong> (at what price?) · <strong>Place</strong> (where to sell?) · <strong>Promotion</strong> (how to increase sales?)
+        </div>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-amber">🏭</div>
+        <h3>Production Function</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <div class="def-box">
+          <strong>Objective</strong>
+          Transformation of raw material flows and information flows into finished products.
+        </div>
+        <div class="two-col">
+          <div class="mini-card">
+            <h4>Push Production</h4>
+            Make-to-stock: produce for inventory based on demand forecasts. Efficient for high-volume, standardized goods.
+          </div>
+          <div class="mini-card">
+            <h4>Pull Production</h4>
+            Make-to-order: produce only when a customer order is received. Reduces waste; ideal for customized products.
+          </div>
+        </div>
+        <p style="margin-top:.8rem;font-size:.9rem;">The strategic choice between push and pull depends on market conditions, product type, and desired service level.</p>
+      </div>
+    </div>
+ 
+    <div class="card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-icon icon-purple">🔬</div>
+        <h3>R&amp;D Function</h3>
+        <span class="card-toggle">▼</span>
+      </div>
+      <div class="card-body">
+        <ul class="key-points">
+          <li>Develops new products and services</li>
+          <li>Tests and validates new technologies</li>
+          <li>Develops new applications and software</li>
+          <li>Analyzes market trends and competitive environment</li>
+          <li>Drives long-term competitive advantage through innovation</li>
+        </ul>
+        <div class="def-box">
+          <strong>Importance</strong>
+          R&amp;D is the engine of innovation. For digital startups, R&amp;D investments in fixing bugs, improving UX, and adding AI features directly determine customer satisfaction and market position.
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+</div>
+ 
+</div><!-- /courses-section -->
+ 
+<!-- ══════════════════════════════════════════ -->
+<!-- EXERCISES SECTION                          -->
+<!-- ══════════════════════════════════════════ -->
+<div id="exercises-section" style="display:none;">
+ 
+<!-- T1 Exercises -->
+<div class="ex-header">
+  <span class="ex-badge">Tutorial 1</span>
+  <strong>Introduction to Economics</strong>
+</div>
+ 
+<div class="ex-card" id="ex-t1-0">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">★</div>
+    <h4>Exercise 0.1 — The "Best Code in the World" Case</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p><strong>Context:</strong> A team of brilliant engineers creates an ultra-secure messaging app — flawless code, zero bugs. After 2 years of development, they realize that the server cost per message is <strong>10 DA</strong>, but users are only willing to pay <strong>2 DA</strong> per subscription. The company goes bankrupt in 3 months.</p>
+      <p><strong>Q1:</strong> Is this a technical or economic failure?</p>
+      <p><strong>Q2:</strong> What economic question should you have asked before writing the first line of code?</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>Q1:</strong> This is an <strong>economic failure</strong>. The technology was perfect, but the business model was unviable. The cost to deliver the service (10 DA) exceeded what customers were willing to pay (2 DA), making every transaction a loss.</p>
+      <p style="margin-top:.6rem;"><strong>Q2:</strong> The key economic question was: <em>"What is the maximum price the market is willing to pay, and can we deliver at a lower cost?"</em> More specifically: "What is our break-even point?" This is a question of <strong>market fit</strong> and <strong>unit economics</strong> — core economic concepts that must precede technical development.</p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t1-1">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">1</div>
+    <h4>Exercise 0.2 — Make or Buy Decision (CAPEX vs OPEX)</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p><strong>Option A (Make):</strong> Develop chat in-house. Takes 2 months with 2 engineers at 100,000 DA/month each.</p>
+      <p><strong>Option B (Buy):</strong> Integrate existing SaaS solution at 20,000 DA/month.</p>
+      <p><strong>Q1:</strong> What is the total cost of Option A?</p>
+      <p><strong>Q2:</strong> How many months of Option B does Option A cost?</p>
+      <p><strong>Q3:</strong> What economic concept is illustrated by the opportunity cost of engineer time?</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>Q1:</strong> Option A Cost = 2 engineers × 100,000 DA/month × 2 months = <strong>400,000 DA</strong></p>
+      <p style="margin-top:.5rem;"><strong>Q2:</strong> 400,000 DA ÷ 20,000 DA/month = <strong>20 months</strong> of Option B</p>
+      <p style="margin-top:.5rem;"><strong>Q3:</strong> This illustrates <strong>Opportunity Cost</strong> — the value of the best alternative foregone. By having engineers build the chat, you lose 2 months of work on your core product. The true cost of "Make" includes what you give up by NOT doing something else.</p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t1-2">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">2</div>
+    <h4>Exercise 0.3 — The Phantom Invoice (Scarcity &amp; Cost Management)</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>A student trains an AI model on a cloud GPU server at <strong>200 DA/hour</strong>. Training takes 2 hours, but the student forgets to shut it down and leaves for the weekend (48 hours).</p>
+      <p><strong>Q1:</strong> What is the useful cost? What is the wasted cost?</p>
+      <p><strong>Q2:</strong> What lesson do you draw about technical vs. management competence?</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>Q1:</strong> Useful (productive) cost = 2 hours × 200 DA = <strong>400 DA</strong><br/>Wasted (unproductive) cost = 48 hours × 200 DA = <strong>9,600 DA</strong><br/>Total cost = 10,000 DA — 96% wasted!</p>
+      <p style="margin-top:.5rem;"><strong>Q2:</strong> Technical competence (knowing how to launch a server) is not sufficient alone. <strong>Management competence</strong> — knowing how to monitor, control, and manage resources/budgets — is equally critical. An engineer who cannot manage costs is a liability, not just an asset.</p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t1-3">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">3</div>
+    <h4>Exercise 5 — Macroeconomics &amp; Real vs. Nominal Salary</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>You are hired as a junior engineer at <strong>80,000 DA</strong> in 2023. In 2024, salary raised to <strong>84,000 DA</strong>. The ONS reports an <strong>inflation rate of 8%</strong> for 2024.</p>
+      <p><strong>Q1:</strong> Has your purchasing power increased, stayed the same, or decreased?</p>
+      <p><strong>Q2:</strong> What does this show about the importance of macroeconomics for your career?</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>Q1:</strong> Nominal salary increase = (84,000 − 80,000) / 80,000 = <strong>5%</strong><br/>Inflation = <strong>8%</strong><br/>Real wage change ≈ 5% − 8% = <strong>−3%</strong><br/>→ Your <strong>purchasing power has DECREASED</strong> by ~3%, even though your nominal salary increased. You earn more money but can buy less.</p>
+      <p style="margin-top:.5rem;"><strong>Q2:</strong> Understanding macroeconomics is essential for salary negotiations and career planning. A raise below the inflation rate is effectively a pay cut. Engineers who understand macroeconomic indicators can make better financial and career decisions.</p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t1-4">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">4</div>
+    <h4>Exercise 6 — Value Added Calculation (Dzaïr-Soft)</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>Startup "Dzaïr-Soft" 2023 data:</p>
+      <p>Revenue: 5,000,000 DA · PC depreciation: 500,000 DA · Cloud hosting: 200,000 DA · Electricity/Internet: 100,000 DA · Salaries: 3,000,000 DA · Office supplies: 50,000 DA</p>
+      <p><strong>Q1:</strong> Calculate Intermediate Consumption (IC).</p>
+      <p><strong>Q2:</strong> Calculate Value Added (VA).</p>
+      <p><strong>Q3:</strong> Calculate Profit.</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>IC</strong> = Cloud hosting + Electricity/Internet + Office supplies<br/>= 200,000 + 100,000 + 50,000 = <strong>350,000 DA</strong><br/><em>(Note: PC depreciation is fixed capital, not IC. Salaries are labor costs, subtracted from VA.)</em></p>
+      <p style="margin-top:.5rem;"><strong>VA</strong> = Revenue − IC = 5,000,000 − 350,000 = <strong>4,650,000 DA</strong></p>
+      <p style="margin-top:.5rem;"><strong>Profit</strong> = VA − Salaries − Depreciation = 4,650,000 − 3,000,000 − 500,000 = <strong>1,150,000 DA</strong></p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t1-5">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">5</div>
+    <h4>Exercise 8 — CAPEX vs OPEX: 3-Year Cost Comparison</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p><strong>Option A (CAPEX):</strong> Server purchase 1.5M DA + Maintenance 100k DA/year + Electricity 50k DA/year</p>
+      <p><strong>Option B (OPEX):</strong> Cloud subscription at 60,000 DA/month</p>
+      <p>Calculate total cost over 3 years for each. Which is cheaper? Why might a startup still choose the more expensive option?</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>Option A (3 years):</strong><br/>Server: 1,500,000 + Maintenance: 300,000 (3×100k) + Electricity: 150,000 (3×50k) = <strong>1,950,000 DA</strong></p>
+      <p style="margin-top:.5rem;"><strong>Option B (3 years):</strong><br/>60,000 × 36 months = <strong>2,160,000 DA</strong></p>
+      <p style="margin-top:.5rem;"><strong>Option A is cheaper by 210,000 DA.</strong></p>
+      <p style="margin-top:.5rem;">However, a startup might choose Option B because: (1) No large upfront capital needed — preserves cash flow, (2) Flexible scaling — can increase/decrease instantly, (3) No technical maintenance burden, (4) Pay-as-you-grow model fits uncertain demand.</p>
+    </div>
+  </div>
+</div>
+ 
+<!-- T2 Exercises -->
+<div class="ex-header" style="margin-top:3rem;">
+  <span class="ex-badge">Tutorial 2</span>
+  <strong>Organization Overview</strong>
+</div>
+ 
+<div class="ex-card" id="ex-t2-1">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">1</div>
+    <h4>Exercise 1 — True or False Statements</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>Judge the accuracy of each statement (True/False with explanation).</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Answers</button>
+    <div class="solution-box">
+      <strong>✅ Answers</strong>
+      <table class="summary-table">
+        <tr><th>#</th><th>Statement</th><th>Answer</th></tr>
+        <tr><td>1</td><td>An organization is a social group deliberately created to achieve specific objectives.</td><td>✅ TRUE</td></tr>
+        <tr><td>2</td><td>An organization can be classified differently depending on the criterion used.</td><td>✅ TRUE</td></tr>
+        <tr><td>3</td><td>An organization combines resources to achieve a specific objective.</td><td>✅ TRUE</td></tr>
+        <tr><td>4</td><td>Work in an organization is not divided into distinct tasks.</td><td>❌ FALSE — Work is divided into specialized tasks</td></tr>
+        <tr><td>5</td><td>An organization's missions can be economic, social, and environmental.</td><td>✅ TRUE</td></tr>
+        <tr><td>6</td><td>A company and an organization are exactly the same thing.</td><td>❌ FALSE — All companies are organizations, but not all organizations are companies</td></tr>
+        <tr><td>7</td><td>All organizations are companies.</td><td>❌ FALSE — NGOs, hospitals, schools are not companies</td></tr>
+        <tr><td>8</td><td>A company is an economic organization that produces goods or services for sale.</td><td>✅ TRUE</td></tr>
+        <tr><td>9</td><td>Industrial companies mainly specialize in providing services.</td><td>❌ FALSE — Industrial = manufacturing goods (secondary sector)</td></tr>
+        <tr><td>10</td><td>The primary sector involves the exploitation of natural resources.</td><td>✅ TRUE</td></tr>
+        <tr><td>11</td><td>The tertiary sector is related to the transformation of raw materials.</td><td>❌ FALSE — That is the secondary sector; tertiary = services</td></tr>
+        <tr><td>12</td><td>A public company is controlled by the State or public authorities.</td><td>✅ TRUE</td></tr>
+        <tr><td>17</td><td>A mixed company necessarily involves State participation in its capital.</td><td>✅ TRUE</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t2-2">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">2</div>
+    <h4>Exercise 2 — AGROPLUS Case Study</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>AGROPLUS operates in the agricultural and agri-food sector. It exploits agricultural land AND processes its production into food products. It employs 120 workers, is privately owned, and legally structured as a SARL.</p>
+      <p><strong>Questions:</strong></p>
+      <p>1. Which economic sector(s) does AGROPLUS belong to?</p>
+      <p>2. What is its size category?</p>
+      <p>3. What is its ownership type?</p>
+      <p>4. What is its legal status and what does it imply?</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>1. Sector:</strong> AGROPLUS operates in BOTH the <strong>primary sector</strong> (exploitation of agricultural land) and the <strong>secondary sector</strong> (processing agricultural products into food). This integration increases its added value.</p>
+      <p style="margin-top:.5rem;"><strong>2. Size:</strong> With 120 employees, AGROPLUS is an <strong>SME</strong> (Small and Medium Enterprise — between 10 and 499 employees).</p>
+      <p style="margin-top:.5rem;"><strong>3. Ownership:</strong> <strong>Private sector</strong> — belongs to private investors, with a profit and performance orientation.</p>
+      <p style="margin-top:.5rem;"><strong>4. Legal Status:</strong> <strong>SARL</strong> (Société à Responsabilité Limitée / LLC). This limits each partner's financial liability to the amount they contributed to the company. Protects personal assets from business debts.</p>
+    </div>
+  </div>
+</div>
+ 
+<!-- T3 Exercises -->
+<div class="ex-header" style="margin-top:3rem;">
+  <span class="ex-badge">Tutorial 3</span>
+  <strong>Systemic Perspective &amp; Organizational Structure</strong>
+</div>
+ 
+<div class="ex-card" id="ex-t3-1">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">1</div>
+    <h4>Exercise 1 — Identify the Organizational Structure (MCQ)</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>An IT company has departments: Human Resources, Software Development, Marketing, Finance, Technical Support. What type of structure is this?</p>
+    </div>
+    <p style="margin-bottom:.6rem;font-size:.88rem;color:var(--muted);">Select the correct answer:</p>
+    <button class="mcq-option" onclick="answerMCQ(this,'wrong')">a) Matrix structure</button>
+    <button class="mcq-option" onclick="answerMCQ(this,'correct')">b) Functional structure</button>
+    <button class="mcq-option" onclick="answerMCQ(this,'wrong')">c) Divisional structure</button>
+    <div class="solution-box" id="mcq-t3-1" style="display:none;">
+      <strong>✅ Explanation</strong>
+      <p>This is a <strong>Functional Structure</strong> — employees are grouped by function/department (HR, Development, Marketing, Finance, Support). This is the most common structure for stable, single-product companies. Each department specializes in its domain.</p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t3-2">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">2</div>
+    <h4>Exercise 2 — Organizational Culture Comparison</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p><strong>Company A:</strong> Strict rules · Mandatory procedures · Centralized decisions</p>
+      <p><strong>Company B:</strong> Teamwork · Encouragement of innovation · Freedom in work organization</p>
+      <p>1. Which company has a more innovative culture? 2. Which is the most bureaucratic?</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>1. More innovative culture:</strong> <strong>Company B</strong>. Teamwork, innovation encouragement, and freedom create an environment where employees can experiment, take initiative, and develop new ideas — the hallmarks of an innovative organizational culture.</p>
+      <p style="margin-top:.5rem;"><strong>2. Most bureaucratic:</strong> <strong>Company A</strong>. Strict rules, mandatory procedures, and centralized decision-making are characteristics of a bureaucratic (mechanistic) organization. This provides stability and control but can slow innovation and reduce employee autonomy.</p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t3-3">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">3</div>
+    <h4>Exercise 4 — Software Company Analysis</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>A software company: employees grouped in departments (development, marketing, support). Manager encourages ideas and teamwork. Company offers training and bonuses.</p>
+      <p>1. What organizational structure? 2. What leadership style? 3. Give an example of motivation action. 4. Cite an element of organizational culture.</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>1. Structure:</strong> <strong>Functional structure</strong> — employees grouped by department/function.</p>
+      <p style="margin-top:.5rem;"><strong>2. Leadership style:</strong> <strong>Democratic (participative)</strong> — the manager encourages sharing ideas and working as a team, which means he consults employees and involves them in decisions.</p>
+      <p style="margin-top:.5rem;"><strong>3. Motivation action:</strong> Training programs that develop skills (intrinsic motivation) OR performance bonuses (extrinsic motivation).</p>
+      <p style="margin-top:.5rem;"><strong>4. Organizational culture element:</strong> Teamwork and idea-sharing reflect a collaborative, open culture where knowledge is valued and employees feel heard.</p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t3-4">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">4</div>
+    <h4>Exercise 5 — Leadership Style (MCQ)</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>A project manager makes all decisions alone and never consults the team. What leadership style is this?</p>
+    </div>
+    <button class="mcq-option" onclick="answerMCQ(this,'wrong')">a) Democratic</button>
+    <button class="mcq-option" onclick="answerMCQ(this,'correct')">b) Authoritarian (Autocratic)</button>
+    <button class="mcq-option" onclick="answerMCQ(this,'wrong')">c) Transformational</button>
+    <div class="solution-box" id="mcq-t3-4" style="display:none;">
+      <strong>✅ Explanation</strong>
+      <p><strong>Authoritarian/Autocratic</strong> leadership: the leader makes all decisions unilaterally, gives orders, and does not consult team members. Efficient in emergencies but can demotivate employees and reduce creativity over time.</p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t3-5">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">5</div>
+    <h4>Practical Case 1 — SME with Organizational Problems</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>An IT SME is experiencing: slow decision-making, employees don't know whom to report to, tasks are poorly distributed.</p>
+      <p><strong>Q1:</strong> What internal architectural problems do you identify?</p>
+      <p><strong>Q2:</strong> What solutions would you propose?</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>Problems identified:</strong></p>
+      <p>• Unclear hierarchy / authority — employees don't know their reporting line (→ structural problem)<br/>• No clear division of tasks (→ lack of role definition)<br/>• Centralized or undefined decision process (→ slow, blocked decisions)</p>
+      <p style="margin-top:.5rem;"><strong>Proposed solutions:</strong></p>
+      <p>• Formalize an organizational chart defining the hierarchy, roles, and reporting lines<br/>• Create clear job descriptions with specific responsibilities<br/>• Delegate decision-making authority to appropriate levels<br/>• Implement regular team meetings and communication channels</p>
+    </div>
+  </div>
+</div>
+ 
+<!-- T4 Exercises -->
+<div class="ex-header" style="margin-top:3rem;">
+  <span class="ex-badge">Tutorial 4</span>
+  <strong>Functions of an Organization</strong>
+</div>
+ 
+<div class="ex-card" id="ex-t4-1">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">1</div>
+    <h4>Exercise 1 — Smartphone Order Scenario</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>A customer orders a smartphone online.</p>
+      <p><strong>Q1:</strong> Which function is involved first?</p>
+      <p><strong>Q2:</strong> What happens if the product is out of stock?</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>Q1:</strong> The <strong>Sales function</strong> is involved first — it receives and processes the customer order, confirms availability, and initiates the fulfillment process.</p>
+      <p style="margin-top:.5rem;"><strong>Q2:</strong> If out of stock:<br/>→ The <strong>Inventory Management function</strong> flags the shortage<br/>→ The <strong>Purchasing function</strong> contacts suppliers to reorder<br/>→ The <strong>Production function</strong> (if applicable) may be triggered to manufacture more units<br/>→ The <strong>Logistics function</strong> will arrange delivery once stock is replenished<br/>→ The <strong>Sales function</strong> informs the customer of the delay</p>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t4-2">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">2</div>
+    <h4>Exercise 2 — Match Actions to Functions</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>Match each action to the correct function: Sales, Production, Purchasing, Logistics, Inventory Mgmt, Finance/Accounting, HR, Management, R&amp;D</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Answers</button>
+    <div class="solution-box">
+      <strong>✅ Complete Answer Key</strong>
+      <table class="summary-table">
+        <tr><th>Action</th><th>Function</th></tr>
+        <tr><td>Negotiate with suppliers</td><td>Purchasing</td></tr>
+        <tr><td>Recruit employees</td><td>Human Resources (HR)</td></tr>
+        <tr><td>Set the price</td><td>Sales / Marketing</td></tr>
+        <tr><td>Transport goods</td><td>Logistics</td></tr>
+        <tr><td>Pay salaries</td><td>Finance / Accounting</td></tr>
+        <tr><td>Transform raw materials</td><td>Production</td></tr>
+        <tr><td>Launch a new product</td><td>R&amp;D</td></tr>
+        <tr><td>Check stock</td><td>Inventory Management</td></tr>
+        <tr><td>Prospect for customers</td><td>Sales</td></tr>
+        <tr><td>Order raw materials</td><td>Purchasing</td></tr>
+        <tr><td>Organize delivery</td><td>Logistics</td></tr>
+        <tr><td>Monitor performance</td><td>Management</td></tr>
+        <tr><td>Train employees</td><td>Human Resources (HR)</td></tr>
+        <tr><td>Store products</td><td>Inventory Management / Logistics</td></tr>
+        <tr><td>Manage invoices</td><td>Finance / Accounting</td></tr>
+        <tr><td>Plan production</td><td>Production / Management</td></tr>
+        <tr><td>Build customer loyalty</td><td>Sales</td></tr>
+        <tr><td>Choose a supplier</td><td>Purchasing</td></tr>
+        <tr><td>Optimize stock</td><td>Inventory Management</td></tr>
+        <tr><td>Develop a new application</td><td>R&amp;D</td></tr>
+        <tr><td>Analyze the market</td><td>Sales / Marketing</td></tr>
+        <tr><td>Launch a marketing campaign</td><td>Sales / Marketing</td></tr>
+        <tr><td>Test a new technology</td><td>R&amp;D</td></tr>
+        <tr><td>Decide whether the promotion is profitable</td><td>Finance / Management</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+ 
+<div class="ex-card" id="ex-t4-3">
+  <div class="ex-card-head" onclick="toggleEx(this)">
+    <div class="ex-num">3</div>
+    <h4>Exercise 3 — Delivery Startup Case (Algeria)</h4>
+    <span class="card-toggle">▼</span>
+  </div>
+  <div class="ex-body">
+    <div class="ex-q">
+      <p>A startup developing a delivery service (groceries, meals, parcels) across several Algerian cities faces: delivery delays, bugs in the app, and dissatisfied customers.</p>
+      <p><strong>Q1:</strong> What are the 3 most critical functions?</p>
+      <p><strong>Q2:</strong> Give 2 possible problems and 2 improvements.</p>
+      <p><strong>Q3:</strong> Identify 3 R&amp;D actions to solve the tech/delivery issues.</p>
+    </div>
+    <button class="solution-toggle" onclick="toggleSolution(this)">👁️ Show Solution</button>
+    <div class="solution-box">
+      <strong>✅ Model Answer</strong>
+      <p><strong>Q1 — 3 Critical Functions:</strong><br/>1. <strong>Logistics</strong> — delivery is the core business; optimizing routes and timing is critical<br/>2. <strong>R&amp;D</strong> — fixing app bugs, improving algorithms, and adding features<br/>3. <strong>Customer Service (Sales)</strong> — managing dissatisfied customers and building loyalty</p>
+      <p style="margin-top:.5rem;"><strong>Q2 — Problems &amp; Improvements:</strong><br/>Problems: (1) No route optimization → delays; (2) Insufficient QA testing → bugs<br/>Improvements: (1) Implement real-time GPS tracking and dynamic routing; (2) Set up a formal bug-reporting and sprint-based development cycle</p>
+      <p style="margin-top:.5rem;"><strong>Q3 — R&amp;D Actions:</strong><br/>1. Develop and test an AI-based route optimization algorithm<br/>2. Conduct systematic QA testing and beta releases before full deployment<br/>3. Research and implement real-time tracking features for customers</p>
+    </div>
+  </div>
+</div>
+ 
+</div><!-- /exercises-section -->
+ 
+</main>
+ 
+<footer>
+  Built for <span>1CP — Introduction to Organizations</span> · 2025–2026 · Ms. BenMiloud &amp; Ms. Bourai
+</footer>
+ 
+<script>
+// ── Section Management ──────────────────────────────────────
+function showSection(s){
+  document.getElementById('courses-section').style.display = s==='courses' ? 'block' : 'none';
+  document.getElementById('exercises-section').style.display = s==='exercises' ? 'block' : 'none';
+  // Show all chapters when 'courses'
+  if(s==='courses') document.querySelectorAll('.chapter').forEach(c=>c.classList.remove('hidden'));
+  window.scrollTo({top:200,behavior:'smooth'});
+}
+function showChapter(id){
+  showSection('courses');
+  document.querySelectorAll('.chapter').forEach(c=>{
+    c.style.display = (c.id===id) ? 'block' : 'none';
+  });
+  setTimeout(()=>{
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+function setActive(btn){
+  document.querySelectorAll('.toc-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+ 
+// ── Card Toggle ─────────────────────────────────────────────
+function toggleCard(header){
+  const card = header.closest('.card');
+  card.classList.toggle('open');
+}
+ 
+// ── Exercise Toggle ─────────────────────────────────────────
+function toggleEx(header){
+  const card = header.closest('.ex-card');
+  card.classList.toggle('open');
+}
+ 
+// ── Solution Toggle ─────────────────────────────────────────
+function toggleSolution(btn){
+  const box = btn.nextElementSibling;
+  const visible = box.classList.toggle('visible');
+  btn.textContent = visible ? '🙈 Hide Solution' : '👁️ Show Solution';
+}
+ 
+// ── MCQ ─────────────────────────────────────────────────────
+function answerMCQ(btn, result){
+  const siblings = btn.parentElement.querySelectorAll('.mcq-option');
+  siblings.forEach(b=>{b.classList.remove('correct','wrong');b.disabled=true;});
+  btn.classList.add(result);
+  // Show explanation
+  const box = btn.parentElement.querySelector('.solution-box[id]');
+  if(box) box.style.display = 'block';
+}
+ 
+// ── Progress Bar ─────────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  const s = document.documentElement.scrollTop;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress').style.width = (s/h*100)+'%';
+});
+ 
+// ── Open all chapter cards on chapter view ───────────────────
+document.querySelectorAll('.card-header').forEach(h=>{
+  // Start all closed
+});
+</script>
+</body>
+</html>
